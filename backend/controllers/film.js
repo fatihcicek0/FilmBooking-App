@@ -38,6 +38,7 @@ exports.getFilmById = async (req, res) => {
         const response2 = await Reservation.getSeatsByFilmId(filmId);
         const filmDetail = response[0][0];
         const reservations = response2[0];
+        console.log(reservations);
         res.send({
             filmDetail,
             reservations
