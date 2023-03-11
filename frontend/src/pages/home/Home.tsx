@@ -17,6 +17,7 @@ const Home = () => {
   return (
     <div className="Home">
       {data.map(f => {
+        console.log(f.id);
         return (
           <Link to={`/film/${f.id}`}>
             <div key={f.name} className="card">

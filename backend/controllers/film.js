@@ -1,4 +1,6 @@
 const Film = require("../models/film");
+const Reservation = require("../models/reservation");
+
 
 exports.addFilm = async (req, res) => {
     const { name, price, date, seatQuantity } = req.body;
@@ -30,10 +32,16 @@ exports.getFilms = async (req, res) => {
 
 }
 exports.getFilmById = async (req, res) => {
-    const filmId = req.params;
+    const { filmId } = req.params;
     try {
         const response = await Film.getFilmById(filmId);
-        console.log(response);
+        const response2 = await Reservation.getSeatsByFilmId(filmId);
+        const filmDetail = response[0][0];
+        const reservations = response2[0];
+        res.send({
+            filmDetail,
+            reservations
+        });
     } catch (err) {
         console.log(err);
     }

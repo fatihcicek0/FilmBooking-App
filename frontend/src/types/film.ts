@@ -1,4 +1,10 @@
 import { ThunkDispatch } from "redux-thunk";
+export interface Reservation{
+    id:number;
+    userId:number;
+    filmId:number;
+}
+
 export interface Film{
     id:number;
     name:string;
@@ -9,6 +15,7 @@ export interface Film{
 export interface FilmState{
     data:Film[];
     filmDetail:Film;
+    reservations:Reservation[];
     loading:boolean;
     error:string;
 }
@@ -29,8 +36,7 @@ interface GET_FİLM_START{
 }
 interface GET_FİLM_SUCCESS{
     type:"GET_FİLM_SUCCESS";
-    payload:Film
-    ;
+    payload:FilmState;
 }
 interface GET_FİLM_ERROR{
     type:"GET_FİLM_ERROR"

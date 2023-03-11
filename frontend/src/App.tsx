@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/home/Home';
+import FilmDetail from './pages/detail/FilmDetail';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element={<Home/>}></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/register' element={<Register/>}></Route>
+        <Route path='/film/:filmId' element={<FilmDetail/>}></Route>
       </Routes>
     </div>
   );
