@@ -39,16 +39,14 @@
             box-sizing: border-box;
             padding-top: 5px;
             cursor: pointer;
+            font-size: 12px;
         }
 
         .reserved {
             cursor: no-drop;
-            color:rgb(141, 141, 141);
+            color: rgb(141, 141, 141);
             background-color: rgb(193, 204, 230);
         }
-
-        .reserved:hover ::after {
-            content: 'res';
-        }
     }
+
 }

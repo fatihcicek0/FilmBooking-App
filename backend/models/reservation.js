@@ -1,14 +1,15 @@
 const connection=require('../db/db');
 
 module.exports=class Reservation{
-        constructor(userId,filmId){
+        constructor(userId,filmId,seatNumber){
             this.userId=userId;
             this.filmId=filmId;
+            this.seatNumber=seatNumber;
         }
     saveSeat(){
-        return connection.query('INSERT INTO seats(userId,filmId) VALUES(?,?)',[this.userId,this.userId]);
+        return connection.query('INSERT INTO reservations(userId,filmId,seatNumber) VALUES(?,?,?)',[this.userId,this.filmId,this.seatNumber]);
     }    
     static getSeatsByFilmId(filmId){
-        return connection.query('SELECT * FROM seats WHERE seats.filmId=?',[filmId]); 
+        return connection.query('SELECT * FROM reservations WHERE reservations.filmId=?',[filmId]); 
     }
 }

@@ -42,7 +42,8 @@ exports.login = async (req, res) => {
             if (comparedPassword) {
                 token = cerateToken(user.id);
                 res.send({
-                    token
+                    token,
+                    userId
                 })
             } else {
                 return res.send({

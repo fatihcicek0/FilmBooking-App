@@ -1,8 +1,8 @@
 import { ThunkDispatch } from "redux-thunk";
 export interface Reservation{
-    id:number;
     userId:number;
     filmId:number;
+    seatNumber:number;
 }
 
 export interface Film{
@@ -42,8 +42,20 @@ interface GET_FİLM_ERROR{
     type:"GET_FİLM_ERROR"
 }
 
+interface ADD_RESERVATİON_START{
+    type:"ADD_RESERVATİON_START"
+}
+interface ADD_RESERVATİON_SUCCESS{
+    type:"ADD_RESERVATİON_SUCCESS";
+    payload:Reservation;
+}
+interface ADD_RESERVATİON_ERROR{
+    type:"ADD_RESERVATİON_ERROR"
+}
+
 
 export type FilmAction= 
 | GET_FİLMS_START | GET_FİLMS_SUCCESS | GET_FİLMS_ERROR
-| GET_FİLM_START | GET_FİLM_SUCCESS | GET_FİLM_ERROR;
+| GET_FİLM_START | GET_FİLM_SUCCESS | GET_FİLM_ERROR
+| ADD_RESERVATİON_START | ADD_RESERVATİON_SUCCESS | ADD_RESERVATİON_ERROR 
 export type FilmDispatch=ThunkDispatch<FilmState,void,FilmAction>

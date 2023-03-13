@@ -47,3 +47,20 @@ exports.getFilmById = async (req, res) => {
         console.log(err);
     }
 }
+exports.addReservation = async (req, res) => {
+    const { filmId, userId, seatNumber } = req.body;
+    console.log(req.body);
+    const newReservation = new Reservation();
+    newReservation.filmId = filmId;
+    newReservation.userId = userId;
+    newReservation.seatNumber = seatNumber;
+ 
+    try {
+        const response = await newReservation.saveSeat();
+        res.send({
+            message: "successful"
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}

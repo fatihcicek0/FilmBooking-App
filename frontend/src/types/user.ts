@@ -1,5 +1,11 @@
 import { ThunkDispatch } from "redux-thunk";
 
+export interface userReservations{
+    name:string;
+    seatNumber:number;
+    price:number;
+}
+
 export interface User {
     name: string;
     email: string;
@@ -7,7 +13,8 @@ export interface User {
     token: string;
 }
 export interface UserState{
-    data:User,
+    data:User;
+    userReservations:userReservations[];
     loading:boolean,
     error:string
 }

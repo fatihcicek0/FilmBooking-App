@@ -1,4 +1,4 @@
-import { Film, FilmDispatch, FilmState } from "../../types/film";
+import { Film, FilmDispatch, FilmState, Reservation } from "../../types/film";
 import api from "../../utils/api";
 
 
@@ -22,4 +22,14 @@ export const getFilm=(filmId:number)=>async(dispatch:FilmDispatch)=>{
       console.log(err);
       dispatch({type:"GET_FİLM_ERROR"});
    }
+}
+export const addReservation=(data:Reservation)=>async (dispatch:FilmDispatch)=>{
+   dispatch({type:'ADD_RESERVATİON_START'})
+   try{
+      const response=await api().post('/reservation',data);
+      dispatch({type:"ADD_RESERVATİON_SUCCESS",payload:data});
+   }catch(err){
+      console.log(err);
+   }
+
 }

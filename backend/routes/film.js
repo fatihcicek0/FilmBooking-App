@@ -8,4 +8,6 @@ router.get('/film/:filmId',filmControllers.getFilmById);
 
 router.post('/film',filmControllers.addFilm);
 
+router.post('/reservation',filmControllers.addReservation);
+
 module.exports=router;
