@@ -41,6 +41,7 @@ exports.login = async (req, res) => {
             const comparedPassword = await bcrypt.compare(password, user.password);
             if (comparedPassword) {
                 token = cerateToken(user.id);
+                userId=user.id;
                 res.send({
                     token,
                     userId

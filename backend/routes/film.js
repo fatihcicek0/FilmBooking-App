@@ -6,6 +6,8 @@ router.get('/film',filmControllers.getFilms);
 
 router.get('/film/:filmId',filmControllers.getFilmById);
 
+router.get('/reservation/:userId',filmControllers.getReservationsByUserId);
+
 router.post('/film',filmControllers.addFilm);
 
 router.post('/reservation',filmControllers.addReservation);

@@ -21,7 +21,8 @@ const storage = multer.diskStorage({
 
 const userRouter=require('./routes/user');
 const filmRouter=require('./routes/film');
-
+app.use('/img', express.static('./img'));
+app.use(express.static(path.join(__dirname, 'img')));
 app.use(filmRouter);
 app.use(userRouter);
 

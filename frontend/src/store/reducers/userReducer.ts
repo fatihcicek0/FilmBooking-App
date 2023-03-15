@@ -15,9 +15,6 @@ const userReducer=(state:UserState=defaultState,action:UserAction)=>{
                  return {...state,loading:false, data: action.payload}
             case "LOGIN_ERROR":
                  return {...state,loading:false , error:"Token missing oe invalid"}       
-            
-            
-            
             default:
                 return state; 
           }   

@@ -29,7 +29,15 @@ export const addReservation=(data:Reservation)=>async (dispatch:FilmDispatch)=>{
       const response=await api().post('/reservation',data);
       dispatch({type:"ADD_RESERVATİON_SUCCESS",payload:data});
    }catch(err){
-      console.log(err);
+      dispatch({type:"ADD_RESERVATİON_ERROR"});
    }
-
+}
+export const getReservationsByUserId=(userId:number)=>async(dispatch:FilmDispatch)=>{
+   dispatch({type:'GET_RESERVATİONS_START'});
+   try{
+      const response= await api().get<Reservation[]>(`/reservation/${userId}`);
+      dispatch({type:"GET_RESERVATİONS_SUCCESS",payload:response.data});
+   }catch(err){
+      dispatch({type:'GET_RESERVATİONS_ERROR'});
+   }
 }

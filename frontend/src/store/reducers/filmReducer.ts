@@ -26,9 +26,15 @@ const filmReducer = (state: FilmState = defaultState, action: FilmAction) => {
         case "ADD_RESERVATİON_START":
             return { ...state, loading: true, error: "" }
         case "ADD_RESERVATİON_SUCCESS":
-            return { ...state,reservations:[...state.reservations,action.payload] }
+            return { ...state, reservations: [...state.reservations, action.payload] }
         case "ADD_RESERVATİON_ERROR":
             return { ...state, loading: false, error: "Error fetching reservation" }
+        // case "GET_RESERVATİON_START":
+        //     return { ...state, loading: true, error: "" }
+        // case "ADD_RESERVATİON_SUCCESS":
+        //     return { ...state, reservations: [...state.reservations, action.payload] }
+        // case "ADD_RESERVATİON_ERROR":
+        //     return { ...state, loading: false, error: "Error fetching reservation" }
         default:
             return state;
     }

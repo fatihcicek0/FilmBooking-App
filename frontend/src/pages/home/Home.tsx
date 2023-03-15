@@ -23,7 +23,7 @@ const Home = () => {
             <div key={f.name} className="card">
               <img width="170" src={f.img}></img>
               <h3>{f.name}</h3>
-              <p>Price={f.price}</p>
+              <p>Price : {f.price} $</p>
             </div>
           </Link>
         )

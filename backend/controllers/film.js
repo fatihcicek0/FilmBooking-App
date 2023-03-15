@@ -54,13 +54,27 @@ exports.addReservation = async (req, res) => {
     newReservation.filmId = filmId;
     newReservation.userId = userId;
     newReservation.seatNumber = seatNumber;
- 
+
     try {
         const response = await newReservation.saveSeat();
         res.send({
             message: "successful"
         })
     } catch (err) {
+        console.log(err);
+    }
+}
+exports.getReservationsByUserId = async (req, res) => {
+    const { userId } = req.params;
+    try{
+        const response = await Reservation.getReservationsByUserId(userId);
+        const reservations=response[0];
+        console.log(reservations);
+        res.send({
+            reservations
+        })
+
+    }catch(err){
         console.log(err);
     }
 }

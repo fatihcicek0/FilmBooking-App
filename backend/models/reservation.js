@@ -12,4 +12,7 @@ module.exports=class Reservation{
     static getSeatsByFilmId(filmId){
         return connection.query('SELECT * FROM reservations WHERE reservations.filmId=?',[filmId]); 
     }
+    static getReservationsByUserId(userId){
+        return connection.query('SELECT seatNumber FROM reservations WHERE reservations.userId=?',[userId]);
+    } 
 }
