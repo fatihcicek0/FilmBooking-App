@@ -8,48 +8,52 @@ interface MulterRequest extends Request {
     file: any;
 }
 
-export const addFilm = async (req: MulterRequest, res: Response): Promise<any> => {
-    const { name, price, date, seatQuantity } = req.body;
-    const img = req.file;
+const addFilm = async (req: Request, res: Response): Promise<any> => {
+    const { name, price, seatQuantity } = req.body;
+    const img = (req as MulterRequest).file;
     const newFilm = new Film();
     newFilm.name = name;
     newFilm.price = price;
     newFilm.seatQuantity = seatQuantity;
     newFilm.img = img.filename;
 
-    try {
-        const result = await FilmService.saveFilm(newFilm);
-        res.send({
-            message: 'successful !'
-        })
-    } catch (err) {
-        console.log(err);
-    }
+    FilmService.saveFilm(newFilm)
+        .then(() => {
+            res.send({
+                message: 'successful !'
+            })
+        }).catch(err => { console.log(err) });
 }
 
-exports.getFilmById = async (req:Request, res:Response) => {
+const getFilmById = async (req: Request, res: Response): Promise<any> => {
     const { filmId } = req.params;
     try {
-        const response = await FilmService.getFilmById(Number(filmId));
-        console.log(response);
-        response.map(a=>{
-            a.
-        })
-        // const response2 = await Reservation.getSeatsByFilmId(filmId);
-        // const filmDetail = response[0][0];
-        // const reservations = response2[0];
-        // console.log(reservations);
-         
-        // res.send({
-        //     filmDetail,
-        //     reservations
-        // });
+        const film = await FilmService.getFilmById(Number(filmId));
+        const filmDetail = {
+            name: film[0].name,
+            price: film[0].price,
+            seatQuantity: film[0].seatQuantity,
+            img: film[0].img
+        };
+        const reservations = film.map(f => {
+            return {
+                userId: f.userId,
+                filmId: f.filmId,
+                seatNumber: f.seatNumber
+            }
+        });
+
+        res.send({
+            filmDetail,
+            reservations
+        });
     } catch (err) {
         console.log(err);
     }
 }
 
-export const getFilms = async (req: Request, res: Response): Promise<any> => {
+const getFilms = async (req: Request, res: Response): Promise<any> => {
+    console.log("asd");
     try {
         const films = await FilmService.getFilms();
         res.send(films);
@@ -57,31 +61,32 @@ export const getFilms = async (req: Request, res: Response): Promise<any> => {
         console.log(err);
     }
 }
-export const addReservation = async (req: Request, res: Response): Promise<any> => {
+const addReservation = async (req: Request, res: Response): Promise<any> => {
     const { filmId, userId, seatNumber } = req.body;
     const newReservation = new Reservation();
     newReservation.filmId = filmId;
     newReservation.userId = userId;
     newReservation.seatNumber = seatNumber;
 
+    ReservationService.saveSeat(newReservation)
+        .then(() => {
+            res.send({
+                message: "successful"
+            })
+        }).catch(err => {
+            console.log(err);
+        });
+}
+const getReservationsByUserId = async (req: Request, res: Response) => {
+    const userId = Number(req.params.userId);
     try {
-        const response = await ReservationService.saveSeat(newReservation);
+        const reservations = await ReservationService.getReservationsByUserId(userId);
         res.send({
-            message: "successful"
+            reservations
         })
     } catch (err) {
         console.log(err);
     }
 }
-export const getReservationsByUserId=async(req:Request,res:Response)=>{
-    const  userId  = Number(req.params.userId);
-    try{
-        const reservations = await ReservationService.getReservationsByUserId(userId);
-        res.send({
-            reservations
-        })
 
-    }catch(err){
-        console.log(err);
-    }
-}
+export default { getReservationsByUserId, addReservation, getFilms, getFilmById, addFilm };

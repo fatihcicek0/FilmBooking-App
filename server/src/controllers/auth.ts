@@ -7,7 +7,7 @@ import { UserService } from '../services/userService';
 const createToken = (userId: number): string => {
     return jwt.sign({ userId }, 'secret_key');
 }
-export const register = async (req: Request, res: Response) => {
+ const register = async (req: Request, res: Response): Promise<any> => {
     const { name, email, password } = req.body;
     try {
         const user = await UserService.getUserByEmail(email);
@@ -31,11 +31,10 @@ export const register = async (req: Request, res: Response) => {
     }
 }
 
-export const login = async (req: Request, res: Response) => {
+ const login = async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
     try {
         const user = await UserService.getUserByEmail(email);
-
         if (user.email) {
             const comparedPassword = await bcrypt.compare(password, <string>user.password);
             if (comparedPassword) {
@@ -56,3 +55,4 @@ export const login = async (req: Request, res: Response) => {
         console.log(err);
     }
 }
+export default {login,register};

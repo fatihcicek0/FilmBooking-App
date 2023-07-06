@@ -1,27 +1,31 @@
 import express from 'express';
-import { UserService } from './services/userService';
-import { FilmService } from './services/filmService';
-import { Film } from './models/film';
-import { Reservation } from './models/reservation';
-
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import authRouter from './routes/auth';
+import filmRouter from './routes/film';
+import path from 'path';
+import cors from 'cors';
 const app = express();
-   const x=async()=>{
-    const con:(Film & Reservation )[]=[
-        {name:'asd',filmId:123},
-        {name:'asd'}
-     ]
-     let coni:(Film | Reservation)={name:''} ;
-     coni
-     
-     con.map(v=>{
-        console.log(v.filmId);
-     })
-   
-   }
-   x();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './img')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '-' + path.extname(file.originalname))
+    }
+})
 
-app.listen(3000, () => {
+app.use(multer({ storage: storage }).single('img'));
+app.use('/img', express.static('./img'));
+app.use(express.static(path.join(__dirname, 'img')));
+app.use(authRouter);
+app.use(filmRouter);
+
+app.listen(2000, () => {
     console.log("connect");
 });
 
